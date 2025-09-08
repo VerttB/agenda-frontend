@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge"
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
-   variant?: "primary" | "danger",
+   variant?: "primary" | "danger" | "secondary",
 }
 
 export const Button = ({variant = "primary", className, ...rest}: ButtonProps) => {
