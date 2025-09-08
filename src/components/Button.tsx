@@ -6,7 +6,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
 export const Button = ({variant = "primary", className, ...rest}: ButtonProps) => {
 
     const variants = {
-        primary: "bg-gray-400",
+        primary: "bg-gray-500/80",
         danger: "bg-red-700",
         secondary: "bg-blue-700"
     };
