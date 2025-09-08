@@ -38,7 +38,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             name={label}
             ref={ref}
             className={twMerge(
-              "text-gray-900 w-1/3 bg-white border-4 border-blue-700 rounded-full",
+              "text-gray-900 w-1/3 bg-white border-4 p-2 border-blue-700 rounded-full",
               
               className,
               LeftIcon && "pl-10",
