@@ -51,7 +51,7 @@ function App() {
         {erro && <p className='text-red-500'>{erro}</p>}
         <Button 
         onClick={() => handleSave()}
-        className=' bg-green-500 text-2xl w-1/6 rounded-full '>
+        className=' bg-green-500  '>
           Salvar
         </Button>
         </div>
