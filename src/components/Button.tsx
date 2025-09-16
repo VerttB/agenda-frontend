@@ -3,7 +3,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
    variant?: "primary" | "danger" | "secondary",
 }
 
-export const Button = ({variant = "primary", className, ...rest}: ButtonProps) => {
+export const Button = ({variant = "primary", className,children, ...rest}: ButtonProps) => {
 
     const variants = {
         primary: "bg-gray-500/80",
@@ -17,7 +17,9 @@ export const Button = ({variant = "primary", className, ...rest}: ButtonProps) =
             `rounded-full px-8 py-2 cursor-pointer shadow-md shadow-gray-500/50 transition-transform
              duration-200 hover:scale-95 active:scale-[98%]`,variants[variant], className)}
         {...rest}
-        />
+        >
+            {children}
+        </button>
       
     )
 }

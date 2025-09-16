@@ -30,8 +30,8 @@ export const ModalRoot = ({
 
   if (!open) return null;
   return createPortal(
-    <div className="fixed top-0 right-0 bottom-0 left-0 z-10 bg-black/60">
-      <div className={twMerge("bg-gray-100 fixed top-1/2 left-1/2 z-10 -translate-1/2 rounded-2xl transition", className)}>
+    <div className="fixed top-0 right-0 bottom-0 left-0 z-10 bg-gray-400/50">
+      <div className={twMerge("bg-gray-100 font-all fixed top-1/2 left-1/2 z-10 -translate-1/2 rounded-2xl transition", className)}>
         {children}
       </div>
     </div>,
