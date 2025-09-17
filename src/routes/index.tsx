@@ -13,12 +13,12 @@ function App() {
   const navigate = useNavigate({from: "/"})
   const handleSave =  async () => {
     try{
-      const res = await fetch("", {
+      const res = await fetch("http://localhost:8080/agenda/criar", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({name})
+        body: name
       })
 
       if(!res.ok){

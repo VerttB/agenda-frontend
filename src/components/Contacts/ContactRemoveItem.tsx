@@ -4,13 +4,36 @@ import { BsFillTrash3Fill } from "react-icons/bs"
 
 import { Button } from "../Button";
 import type { Contact } from "@/core/interfaces/Contact";
+import useSWRMutation from "swr/mutation";
 
 interface ContactRemoveItemProps{
     contact: Contact
+    onSuccess?: () => void
+
 }
 
-export const ContactRemoveItem = ({contact}: ContactRemoveItemProps) => {
+const deleteContact = async (url: string, { arg }: { arg: { contatoId: string } }) => {
+  const response = await fetch(`${url}/${arg.contatoId}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Erro ao excluir contato");
+  }
+
+  return response.json();
+};
+
+export const ContactRemoveItem = ({contact,onSuccess}: ContactRemoveItemProps) => {
     const [open, setOpen] = useState<boolean>(false)
+    const { trigger, isMutating } = useSWRMutation(`http://localhost:8080/contatos/`, deleteContact);
+
+  const handleDelete = async () => {
+    await trigger({ contatoId: contact.id  });
+    onSuccess?.();
+    setOpen(false)
+
+  };
     
 
     return(
@@ -29,8 +52,13 @@ export const ContactRemoveItem = ({contact}: ContactRemoveItemProps) => {
             </Modal.Content>
             <Modal.Actions className="text-white w-full flex justify-around p-4 mb-6">
                 <Button className="px-12 py-2.5" variant="danger">Não</Button>
-                <Button className="px-12 py-2"variant="primary">Sim</Button>
-            </Modal.Actions>
+                <Button
+                    className="px-10 py-2 bg-red-600 hover:bg-red-700"
+                    onClick={handleDelete}
+                    disabled={isMutating}>
+                        {isMutating ? "Excluindo..." : "Confirmar"}
+                </Button>            
+          </Modal.Actions>
         </Modal.Root>
         </>
     )
