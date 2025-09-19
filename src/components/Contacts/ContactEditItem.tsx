@@ -8,6 +8,8 @@ import { Button } from "../Button";
 import type { Contact } from "@/core/interfaces/Contact";
 import { useContact } from "@/core/hooks/useContact";
 import useSWRMutation from "swr/mutation";
+import { useAlert } from "@/core/hooks/useAlert";
+import { Alert } from "../Alert";
 
 interface ContactEditItemProps{
     contact: Contact
@@ -36,21 +38,29 @@ const sendUpdate = async (
 export const ContactEditItem = ({contact, onSuccess}:ContactEditItemProps) => {
     const [open, setOpen] = useState<boolean>(false)
     const [nome, setNome] = useState(contact.nome);
-    const [telefone, setTelefone] = useState(contact.telefone); 
+    const [telefone, setTelefone] = useState(contact.telefone);
+    const { show, message, type, showAlert, hideAlert } = useAlert();
+    
 
     const { trigger, isMutating } = useSWRMutation(`http://localhost:8080/contatos`, sendUpdate);
     const handleUpdate = async () => {
-         await trigger({
-                    contatoId: contact.id,
-                    nome: nome,
-                    telefone: telefone,
-            });
+      try{
+        await trigger({
+                  contatoId: contact.id,
+                  nome: nome,
+                  telefone: telefone,
+          });
 
-        onSuccess?.();
-        setOpen(false)
+      onSuccess?.();
+      showAlert(`Contato Editado com sucesso :)`, "success")
+      setOpen(false)
+      }catch(e:any){
+          showAlert(`Erro ao editar contato ${contact.nome} :(`, "error")
+        }
   };
     return(
         <>
+        <Alert message={message} type={type} show={show} onClose={hideAlert} />
         <Button 
         onClick={() => setOpen(true)} 
         className="bg-white flex justify-center 

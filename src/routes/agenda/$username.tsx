@@ -29,7 +29,7 @@ function RouteComponent() {
       className='py-2  text-gray-900 w-full bg-white border-none font-all rounded-full text-lg'  type="text" 
        />
        </div>
-    <div>
+    <div className="w-1/4">
       {data?.map((d: Contact, i:number) => (
         <ContatcItem contact={d} key={i} onSuccess={() => mutate(endpoint)} />
       ))}

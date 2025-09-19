@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge"
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
-   variant?: "primary" | "danger" | "secondary",
+   variant?: "primary" | "danger" | "secondary" | "ghost",
 }
 
 export const Button = ({variant = "primary", className,children, ...rest}: ButtonProps) => {
@@ -8,7 +8,8 @@ export const Button = ({variant = "primary", className,children, ...rest}: Butto
     const variants = {
         primary: "bg-gray-500/80",
         danger: "bg-red-700",
-        secondary: "bg-blue-700"
+        secondary: "bg-blue-700",
+        ghost: "bg-transparent"
     };
 
     return(

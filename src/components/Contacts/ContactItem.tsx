@@ -2,7 +2,7 @@ import { BsFillTrash3Fill } from "react-icons/bs"
 import { ContactRemoveItem } from "./ContactRemoveItem"
 import { ContactEditItem } from "./ContactEditItem"
 import type { Contact } from "@/core/interfaces/Contact"
-
+import { formatTel } from "@/core/utils/formatTel"
 interface ContactItemProps{
     contact:Contact
     onSuccess: () => void
@@ -15,7 +15,7 @@ export default function ContatcItem({contact,onSuccess}: ContactItemProps){
                 <span className="font-medium w-full">{contact.nome}</span>
             </div>
             <div className="flex justify-evenly gap-2 items-center w-full px-2 ">
-                <span className="w-3/4">{contact.telefone}</span>
+                <span className="w-3/4">{formatTel(contact.telefone)}</span>
                 <ContactEditItem contact={contact} onSuccess={onSuccess}/>
                 <ContactRemoveItem contact={contact} onSuccess={onSuccess}/>
             </div>

@@ -5,7 +5,8 @@ import { BsFillTrash3Fill } from "react-icons/bs"
 import { Button } from "../Button";
 import type { Contact } from "@/core/interfaces/Contact";
 import useSWRMutation from "swr/mutation";
-
+import { Alert } from "../Alert";
+import { useAlert } from "@/core/hooks/useAlert";
 interface ContactRemoveItemProps{
     contact: Contact
     onSuccess?: () => void
@@ -13,31 +14,42 @@ interface ContactRemoveItemProps{
 }
 
 const deleteContact = async (url: string, { arg }: { arg: { contatoId: string } }) => {
+  console.log(arg.contatoId)
   const response = await fetch(`${url}/${arg.contatoId}`, {
     method: "DELETE",
   });
-
-  if (!response.ok) {
+  
+  console.log(response.status, typeof response.status);
+  if (response.status < 199 || response.status > 300) {
     throw new Error("Erro ao excluir contato");
   }
 
+  if(response.status == 204) return null
   return response.json();
 };
 
 export const ContactRemoveItem = ({contact,onSuccess}: ContactRemoveItemProps) => {
     const [open, setOpen] = useState<boolean>(false)
-    const { trigger, isMutating } = useSWRMutation(`http://localhost:8080/contatos/`, deleteContact);
+    const { trigger, isMutating } = useSWRMutation(`http://localhost:8080/contatos`, deleteContact);
+    const { show, message, type, showAlert, hideAlert } = useAlert();
+ 
 
   const handleDelete = async () => {
-    await trigger({ contatoId: contact.id  });
-    onSuccess?.();
-    setOpen(false)
+    try{
+      await trigger({ contatoId: contact.id  });
+      onSuccess?.();
+      showAlert(`Contato${contact.nome} removido :)`, "success" )
+      setOpen(false)
+    }catch(e:any){
+      showAlert(`Erro ao deletar contato ${e} :(`, "error" , 10000)
+    }
 
   };
     
 
     return(
         <>
+        <Alert message={message} type={type} show={show} onClose={hideAlert}/>
         <Button 
         onClick={() => setOpen(true)} 
         className="bg-white flex justify-center 

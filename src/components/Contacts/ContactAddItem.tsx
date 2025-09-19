@@ -6,6 +6,8 @@ import { BsTelephoneFill, BsPlus } from "react-icons/bs";
 import { Input } from "../Input";
 import { Button } from "../Button";
 import useSWRMutation from "swr/mutation";
+import { useAlert } from "@/core/hooks/useAlert";
+import { Alert } from "../Alert";
 
 interface ContactAddItemProps {
   agendaId: string;
@@ -13,7 +15,7 @@ interface ContactAddItemProps {
 }
 
 const sendContact = async (url: string, { arg }: { arg: { nome: string; telefone: string, agendaId:string } }) => {
-  const response = await fetch(url, {
+  const response = await fetch(`${url}/${arg.agendaId}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -32,19 +34,27 @@ export const ContactAddItem = ({ onSuccess,agendaId }: { onSuccess?: () => void,
     const [open, setOpen] = useState<boolean>(false)
     const [nome, setNome] = useState("");
     const [telefone, setTelefone] = useState("");    
-
+    const { show, message, type, showAlert, hideAlert } = useAlert();
+    
     const { trigger, isMutating } = useSWRMutation("http://localhost:8080/contatos", sendContact);
 
     const handleAdd = async () => {
+      try{
         await trigger({agendaId, nome, telefone });
         onSuccess?.();
         setOpen(false);
         setNome("");
         setTelefone("");
+        showAlert("Contato Adicionado Com Sucesso :)", "success")
+
+      }catch(e:any){
+        showAlert("Erro ao adicionar contato :(", "error")
+      }
   };
 
     return(
         <>
+        <Alert show={show} message={message} type={type} onClose={hideAlert}/>
         <Button 
         onClick={() => setOpen(true)} 
         className="bg-white flex justify-center 
