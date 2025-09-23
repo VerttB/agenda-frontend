@@ -45,6 +45,10 @@ function App() {
   const { show, message, type, showAlert, hideAlert } = useAlert();
   
   const handleSave = async () => {
+    if(name.trim().length < 2 || !name.match(/^[a-zA-Z]+$/)){
+      setError("Nome inválido, apenas letras e no mínimo 2 caracteres")
+      return;
+    }
     try{
       const res = await trigger({nome: name});
       showAlert(`Agenda ${name} criada :)`, "success" )
@@ -58,6 +62,10 @@ function App() {
   };
 
   const handleEnter = async () => {
+    if(name.trim().length < 2 || !name.match(/^[a-zA-Z]+$/)){
+      setError("Nome inválido, apenas letras e no mínimo 2 caracteres")
+      return;
+    }
     try{
       const res = await triggerEnter({nomeAgenda: name});
       showAlert(`Entrou na agenda ${name} :)`, "success" )
@@ -92,7 +100,6 @@ function App() {
         <div className="flex flex-col gap-4 max-2xl:w-1/5 max-xl:w-1/3 max-lg:w-2/3 max-md:w-full max-md:px-4 max-md:gap-2 w-1/8">
           <Button 
           onClick={() => handleSave()}
-          disabled={isMutating || !name.trim()}
           className='py-3'
           variant='third'>
             Criar Nova Agenda
@@ -101,7 +108,7 @@ function App() {
           onClick={() => handleEnter()}
           className='py-3'
           variant='secondary'
-          disabled={isMutating || !name.trim()}
+         
 >
               Já tenho Agenda
           </Button>

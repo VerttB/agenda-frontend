@@ -6,6 +6,7 @@ import { ContactAddItem } from '@/components/Contacts/ContactAddItem'
 import useSWR, { mutate } from 'swr'
 import type { Contact } from '@/core/interfaces/Contact'
 import { useEffect, useState } from 'react'
+import { CgSpinner } from 'react-icons/cg'
 export const Route = createFileRoute('/agenda/$username')({
   component: RouteComponent,
 })
@@ -47,6 +48,7 @@ console.log("Render")
           />
         </div>
         <div className="xl:w-3/4 w-full flex flex-col gap-2">
+        {isLoading && <div className='flex justify-center'><CgSpinner className='animate-spin' size={48} color='white'/></div>}
           {data?.map((d: Contact, i: number) => (
             <ContactItem contact={d} key={i} onSuccess={() => mutate(endpoint)} />
           ))}
