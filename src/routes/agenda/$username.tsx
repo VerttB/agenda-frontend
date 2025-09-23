@@ -5,8 +5,27 @@ import { FaMagnifyingGlass } from 'react-icons/fa6'
 import { ContactAddItem } from '@/components/Contacts/ContactAddItem'
 import useSWR, { mutate } from 'swr'
 import type { Contact } from '@/core/interfaces/Contact'
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { CgSpinner } from 'react-icons/cg'
+import type { ContactItemProps } from '@/core/interfaces/ContactItemProps'
+
+const labelContacts = (contacts: Contact[]) => {
+  const contactMap = new Map<string, Contact[]>();
+  contacts.forEach(contact => {
+    const firstLetter = contact.nome.charAt(0).toUpperCase();
+    if (!contactMap.has(firstLetter)) {
+      contactMap.set(firstLetter, []);
+    }
+    contactMap.get(firstLetter)!.push(contact);
+  });
+
+  const contactSorted = Array.from(contactMap.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+  console.log(contactSorted)
+  const contactMapSorted = new Map<string, Contact[]>(contactSorted);
+  return contactMapSorted;
+}
+
+
 export const Route = createFileRoute('/agenda/$username')({
   component: RouteComponent,
 })
@@ -17,7 +36,8 @@ function RouteComponent() {
   const { username } = Route.useParams()
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
-console.log("Render")
+
+  
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearch(search);
@@ -36,7 +56,7 @@ console.log("Render")
 
   return (
     <div className="w-full min-h-screen bg-black flex justify-center  px-2 py-4">
-      <div className="flex flex-col gap-12 w-full max-w-2xl  rounded-xl p-4 mt-8 sm:p-8 items-center">
+      <div className="flex flex-col gap-12 w-full max-w-2xl rounded-xl p-4 mt-8 sm:p-8 items-center">
         <div className=" xl:w-2/3 w-full flex justify-center">
           <Input
             placeholder="Pesquise por um nome ou número de telefone"
@@ -47,14 +67,21 @@ console.log("Render")
             onChange={e => setSearch(e.target.value)}
           />
         </div>
-        <div className="xl:w-3/4 w-full flex flex-col gap-2">
+        <div className="xl:w-4/5 w-full flex items-center overflow-y-auto flex-col gap-2">
         {isLoading && <div className='flex justify-center'><CgSpinner className='animate-spin' size={48} color='white'/></div>}
-          {data?.map((d: Contact, i: number) => (
-            <ContactItem contact={d} key={i} onSuccess={() => mutate(endpoint)} />
-          ))}
-        </div>
+          {data && (
+            
+            Array.from(labelContacts(data)).map(([letter, contacts]) => (
+            <div key={letter} className="flex flex-col w-full gap-2">
+              <h2 className="text-white font-bold text-2xl">{letter}</h2>
+              {contacts.map(contact => (
+                <ContactItem contact={contact} key={contact.id} onSuccess={() => mutate(endpoint)} />
+              ))}
+            </div>
+          )))}
         <ContactAddItem agendaId={username} onSuccess={() => mutate(endpoint)} />
       </div>
+    </div>
     </div>
   )
 }
