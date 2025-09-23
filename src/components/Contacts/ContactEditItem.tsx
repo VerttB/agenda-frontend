@@ -21,11 +21,14 @@ const sendUpdate = async (
   { arg }: { arg: { contatoId: string; nome: string; telefone: string } }
 ) => {
   const response = await fetch(`${url}/${arg.contatoId}`, {
-    method: "PUT",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(arg),
+    body: JSON.stringify({
+      nome: arg.nome,
+      telefone: arg.telefone,
+    }),
   });
 
   if (!response.ok) {
@@ -55,17 +58,17 @@ export const ContactEditItem = ({contact, onSuccess}:ContactEditItemProps) => {
       showAlert(`Contato Editado com sucesso :)`, "success")
       setOpen(false)
       }catch(e:any){
-          showAlert(`Erro ao editar contato ${contact.nome} :(`, "error")
+          showAlert(`Erro ao editar contato ${contact.nome}. :(`, "error")
         }
   };
     return(
         <>
         <Alert message={message} type={type} show={show} onClose={hideAlert} />
-        <Button 
+        <button 
         onClick={() => setOpen(true)} 
-        className="bg-white flex justify-center 
-                  items-center p-2 b-0 shadow-none
-                hover:bg-gray-100"><span><BsPencilFill className="text-blue-800" size={28}/></span></Button>
+        className=" 
+                 w-8 px-0 py-0 bg-transparent rounded-none cursor-pointer hover:scale-95 b-0 shadow-none ">
+                 <BsPencilFill className="text-blue-800" size={28}/></button>
         <Modal.Root open={open} onOpenChange={setOpen} className="bg-white border-blue-600 border-3">
             <Modal.Header  onClose={() => setOpen(false)}></Modal.Header>
             

@@ -7,10 +7,12 @@ import Footer from '@/components/Footer'
 
 export const Route = createRootRoute({
   component: () => (
-    <>
+    <div className="flex flex-col h-screen min-h-0">
       <Header />
-      <Outlet />
-      <Footer/>
+      <main className="flex-1 flex flex-col overflow-auto">
+        <Outlet />
+      </main>
+      <Footer />
       <TanstackDevtools
         config={{
           position: 'bottom-left',
@@ -22,7 +24,6 @@ export const Route = createRootRoute({
           },
         ]}
       />
-
-    </>
+    </div>
   ),
 })

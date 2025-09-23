@@ -50,11 +50,11 @@ export const ContactRemoveItem = ({contact,onSuccess}: ContactRemoveItemProps) =
     return(
         <>
         <Alert message={message} type={type} show={show} onClose={hideAlert}/>
-        <Button 
+        <button
         onClick={() => setOpen(true)} 
-        className="bg-white flex justify-center 
-                  items-center p-2 shadow-none
-                hover:bg-gray-100"><BsFillTrash3Fill size={32} color="red"/></Button>
+        className="flex justify-center 
+                  items-center cursor-pointer p-0 bg-transparent rounded-none hover:scale-95 b-0 shadow-none"><BsFillTrash3Fill size={32} color="red"/>
+                  </button>
         <Modal.Root open={open} onOpenChange={setOpen} className="bg-white border-red-600 border-3">
             <Modal.Header  onClose={() => setOpen(false)}></Modal.Header>
             
