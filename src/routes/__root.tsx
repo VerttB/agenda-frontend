@@ -12,7 +12,7 @@ export const Route = createRootRoute({
     
     <div className="flex flex-col h-screen min-h-0">
       <Header />
-      <main className="flex-1 flex flex-col overflow-auto">
+      <main className="flex-1 flex flex-col ">
         <Outlet />
       </main>
       <Footer />
