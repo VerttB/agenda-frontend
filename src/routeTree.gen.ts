@@ -10,17 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AgendaIndexRouteImport } from './routes/agenda/index'
 import { Route as AgendaUsernameRouteImport } from './routes/agenda/$username'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AgendaIndexRoute = AgendaIndexRouteImport.update({
-  id: '/agenda/',
-  path: '/agenda/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AgendaUsernameRoute = AgendaUsernameRouteImport.update({
@@ -32,31 +26,27 @@ const AgendaUsernameRoute = AgendaUsernameRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/agenda/$username': typeof AgendaUsernameRoute
-  '/agenda': typeof AgendaIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agenda/$username': typeof AgendaUsernameRoute
-  '/agenda': typeof AgendaIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/agenda/$username': typeof AgendaUsernameRoute
-  '/agenda/': typeof AgendaIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/agenda/$username' | '/agenda'
+  fullPaths: '/' | '/agenda/$username'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/agenda/$username' | '/agenda'
-  id: '__root__' | '/' | '/agenda/$username' | '/agenda/'
+  to: '/' | '/agenda/$username'
+  id: '__root__' | '/' | '/agenda/$username'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AgendaUsernameRoute: typeof AgendaUsernameRoute
-  AgendaIndexRoute: typeof AgendaIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -66,13 +56,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/agenda/': {
-      id: '/agenda/'
-      path: '/agenda'
-      fullPath: '/agenda'
-      preLoaderRoute: typeof AgendaIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/agenda/$username': {
@@ -88,7 +71,6 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AgendaUsernameRoute: AgendaUsernameRoute,
-  AgendaIndexRoute: AgendaIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
