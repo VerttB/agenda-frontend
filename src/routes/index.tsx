@@ -40,12 +40,13 @@ function App() {
   const [erro,setError ] = useState("");
   const [name,setName] = useState("") 
   const navigate = useNavigate({from: "/"})
-  const { trigger, isMutating } = useSWRMutation(`http://localhost:8080/agenda`, sendAgenda);
-  const { trigger: triggerEnter } = useSWRMutation(`http://localhost:8080/agenda/entrar`, sendEnter);
+  const { trigger, isMutating : isCreating } = useSWRMutation(`http://localhost:8080/agenda`, sendAgenda);
+  const { trigger: triggerEnter, isMutating:isEntering } = useSWRMutation(`http://localhost:8080/agenda/entrar`, sendEnter);
   const { show, message, type, showAlert, hideAlert } = useAlert();
-  
+  const isValidName = (s: string) => s.trim().length >= 2 && /^\p{L}+(?:[ '\p{L}]+)*$/u.test(s.trim())
+
   const handleSave = async () => {
-    if(name.trim().length < 2 || !name.match(/^[a-zA-Z]+$/)){
+    if(!isValidName(name)){
       setError("Nome inválido, apenas letras e no mínimo 2 caracteres")
       return;
     }
@@ -62,7 +63,7 @@ function App() {
   };
 
   const handleEnter = async () => {
-    if(name.trim().length < 2 || !name.match(/^[a-zA-Z]+$/)){
+    if(!isValidName(name)){
       setError("Nome inválido, apenas letras e no mínimo 2 caracteres")
       return;
     }
@@ -78,11 +79,10 @@ function App() {
     }
   };
 
-  const handleNameChange = (e:any) => {
-      setError("")
-      setName(e.target.value)
-      console.log(e.target.value)
-  }
+const handleNameChange = (e:any) => {
+    setError("")
+    setName(e.target.value)
+}
 
   return (
     <>
@@ -101,16 +101,16 @@ function App() {
           <Button 
           onClick={() => handleSave()}
           className='py-3'
-          variant='third'>
-            Criar Nova Agenda
+          variant='third'
+          aria-label='Criar nova agenda'>
+            {isCreating ? "Criando..." : "Criar Nova Agenda"}
           </Button>
           <Button 
           onClick={() => handleEnter()}
           className='py-3'
           variant='secondary'
-         
->
-              Já tenho Agenda
+          aria-label='Entrar em agenda existente'>
+            { isEntering ? "Entrando..." : "Entrar em Agenda Existente"}
           </Button>
         </div>
         </div>
