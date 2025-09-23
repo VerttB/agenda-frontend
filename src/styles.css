@@ -2,11 +2,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 @import "tailwindcss";
 
-@theme inline{
-  --color-header : #1952b4;
-  --font-all: "Anton", sans-serif ;
-}
 
+
+@layer base {
+ [data-theme="blue"] {
+     --header : #1952b4;
+     --primary: #0b0a19;
+     --secondary: #1952b4;
+
+  }
+  [data-theme="green"] {
+    --header : #2a6437;
+    --primary: #0a100b;
+    --secondary: #2a6437;
+  }
+}
+@theme inline{
+  --font-all: "Anton", sans-serif ;
+  --color-header : var(--header);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+}
 body {
   @apply m-0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",

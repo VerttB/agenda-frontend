@@ -4,9 +4,12 @@ import { TanstackDevtools } from '@tanstack/react-devtools'
 
 import Header from '../components/Header'
 import Footer from '@/components/Footer'
+import { ThemeProvider } from '@/core/providers/ThemeProvider'
 
 export const Route = createRootRoute({
   component: () => (
+        <ThemeProvider>
+    
     <div className="flex flex-col h-screen min-h-0">
       <Header />
       <main className="flex-1 flex flex-col overflow-auto">
@@ -25,5 +28,6 @@ export const Route = createRootRoute({
         ]}
       />
     </div>
+    </ThemeProvider>
   ),
 })

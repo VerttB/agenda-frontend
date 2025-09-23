@@ -86,37 +86,37 @@ const handleNameChange = (e:any) => {
 
   return (
     <>
-    <Alert message={message} type={type} show={show} onClose={hideAlert} />
-    <div className="text-center h-full bg-black px-4 py-6 font-all ">
-      <div className='flex flex-col h-full items-center w-full  justify-evenly p-8 max-md:justify-normal max-md:mt-4 text-white'>
-        <h1 className='text-5xl l max-md:text-3xl max-lg:w-full font-bold w-3/7'>Adicione o seu nome para ter acesso a Agenda virtual!</h1>
-        <div className='flex flex-col w-full gap-12 items-center max-lg:gap-6 max-md:gap-4  max-md:justify-normal max-md:mt-4'>
-        <Input
-         onChange={handleNameChange}
-         placeholder='Nome' 
-         className='p-4 text-gray-900 w-1/3 max-xl:w-3/5 max-lg:w-2/3 max-md:w-full max-md:p-2 text-xl bg-amber-100 border-4 border-blue-700 rounded-full'  type="text" />
-        {erro && <p className='text-red-500'>{erro}</p>}
-      
-        <div className="flex flex-col gap-4 max-2xl:w-1/5 max-xl:w-1/3 max-lg:w-2/3 max-md:w-full max-md:px-4 max-md:gap-2 w-1/8">
-          <Button 
-          onClick={() => handleSave()}
-          className='py-3'
-          variant='third'
-          aria-label='Criar nova agenda'>
-            {isCreating ? "Criando..." : "Criar Nova Agenda"}
-          </Button>
-          <Button 
-          onClick={() => handleEnter()}
-          className='py-3'
-          variant='secondary'
-          aria-label='Entrar em agenda existente'>
-            { isEntering ? "Entrando..." : "Entrar em Agenda Existente"}
-          </Button>
-        </div>
-        </div>
+      <Alert message={message} type={type} show={show} onClose={hideAlert} />
+      <div className="text-center h-full bg-primary px-4 py-6 font-all ">
+        <div className='flex flex-col h-full items-center w-full  justify-evenly p-8 max-md:justify-normal max-md:mt-4 text-white'>
+          <h1 className='text-5xl l max-md:text-3xl max-lg:w-full font-bold w-3/7'>Adicione o seu nome para ter acesso a Agenda virtual!</h1>
+          <div className='flex flex-col w-full gap-12 items-center max-lg:gap-6 max-md:gap-4  max-md:justify-normal max-md:mt-4'>
+          <Input
+          onChange={handleNameChange}
+          placeholder='Nome' 
+          className='p-4 text-gray-900 w-1/3 max-xl:w-3/5 max-lg:w-2/3 max-md:w-full max-md:p-2 text-xl bg-amber-100 border-4 border-blue-700 rounded-full'  type="text" />
+          {erro && <p className='text-red-500'>{erro}</p>}
+        
+          <div className="flex flex-col gap-4 max-2xl:w-1/5 max-xl:w-1/3 max-lg:w-2/3 max-md:w-full max-md:px-4 max-md:gap-2 w-1/8">
+            <Button 
+            onClick={() => handleSave()}
+            className='py-3'
+            variant='third'
+            aria-label='Criar nova agenda'>
+              {isCreating ? "Criando..." : "Criar Nova Agenda"}
+            </Button>
+            <Button 
+            onClick={() => handleEnter()}
+            className='py-3'
+            variant='secondary'
+            aria-label='Entrar em agenda existente'>
+              { isEntering ? "Entrando..." : "Já Tenho Agenda"}
+            </Button>
+          </div>
+          </div>
 
-        </div>
-    </div>
+          </div>
+      </div>
     </>
   )
 }
