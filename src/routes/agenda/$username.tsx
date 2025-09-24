@@ -19,7 +19,7 @@ const deleteManyContacts = async (url: string, { arg }: { arg: {idAgenda:string 
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ nome: arg.nome }),
+    body: JSON.stringify({ nome: arg.nome, telefone: "" }),
   });
   
   console.log(response.status, typeof response.status);
@@ -75,7 +75,7 @@ function RouteComponent() {
 
   
   const { data, error, isLoading } = useSWR(endpoint, fetcher);
-  const { trigger, isMutating } = useSWRMutation(`http://localhost:8080`, deleteManyContacts);
+  const { trigger, isMutating } = useSWRMutation(`http://localhost:8080/agenda`, deleteManyContacts);
 
    const handleDeleteMany = async () => {
     try{
@@ -90,9 +90,10 @@ function RouteComponent() {
   if (error) return <div>Erro ao carregar</div>;
 
   return (
+    <>
     <div className="w-full min-h-screen bg-primary flex justify-center  px-2 py-4">
       <div className="flex flex-col gap-12 w-full max-w-2xl rounded-xl p-4 mt-8 sm:p-8 items-center">
-        <div className=" xl:w-2/3 w-full flex justify-center">
+        <div className=" xl:w-2/3 w-full gap-4 flex justify-center">
           <Input
             placeholder="Pesquise por um nome ou número de telefone"
             leftIcon={<FaMagnifyingGlass className="ml-1" color="gray" size={20} />}
@@ -105,7 +106,7 @@ function RouteComponent() {
               onClick={handleDeleteMany}
               title='Deletar contatos pesquisados'>
             <BsFillTrash3Fill 
-               className='mr-1' size={20} color='red'/>
+               className='mr-1' size={32} color='red'/>
                </button>
         </div>
         <div className="xl:w-4/5 w-full flex px-4 items-center overflow-y-auto scrollbar-thin flex-col gap-2 max-h-[60vh]">
@@ -124,5 +125,6 @@ function RouteComponent() {
         <ContactAddItem agendaId={username} onSuccess={() => mutate(endpoint)} />
     </div>
     </div>
+    </>
   )
 }
