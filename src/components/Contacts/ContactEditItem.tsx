@@ -19,7 +19,7 @@ const sendUpdate = async (
   url: string,
   { arg }: { arg: {agendaId:string, contatoId: string; nome: string; telefone: string } }
 ) => {
-  const response = await fetch(`${url}/${arg.agendaId}/${arg.contatoId}`, {
+  const response = await fetch(`${url}/${arg.contatoId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
