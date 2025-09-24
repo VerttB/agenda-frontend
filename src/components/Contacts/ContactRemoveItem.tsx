@@ -7,15 +7,16 @@ import type { Contact } from "@/core/interfaces/Contact";
 import useSWRMutation from "swr/mutation";
 import { Alert } from "../Alert";
 import { useAlert } from "@/core/hooks/useAlert";
+import { Route, useParams } from "@tanstack/react-router";
 interface ContactRemoveItemProps{
     contact: Contact
     onSuccess?: () => void
 
 }
 
-const deleteContact = async (url: string, { arg }: { arg: { contatoId: string } }) => {
-  console.log(arg.contatoId)
-  const response = await fetch(`${url}/${arg.contatoId}`, {
+const deleteContact = async (url: string, { arg }: { arg: {agendaId:string, contatoId: string } }) => {
+  
+  const response = await fetch(`${url}/${arg.agendaId}/${arg.contatoId}`, {
     method: "DELETE",
   });
   
@@ -30,13 +31,16 @@ const deleteContact = async (url: string, { arg }: { arg: { contatoId: string } 
 
 export const ContactRemoveItem = ({contact,onSuccess}: ContactRemoveItemProps) => {
     const [open, setOpen] = useState<boolean>(false)
-    const { trigger, isMutating } = useSWRMutation(`http://localhost:8080/contatos`, deleteContact);
+    const { trigger, isMutating } = useSWRMutation(`http://localhost:8080/agenda`, deleteContact);
     const { show, message, type, showAlert, hideAlert } = useAlert();
- 
+    const username = useParams({
+      from: '/agenda/$username',
+      select: (params) => params.username,
+  });
 
   const handleDelete = async () => {
     try{
-      await trigger({ contatoId: contact.id  });
+      await trigger({agendaId: username, contatoId: contact.id  });
       onSuccess?.();
       showAlert(`Contato${contact.nome} removido :)`, "success" )
       setOpen(false)

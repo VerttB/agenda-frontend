@@ -10,10 +10,10 @@ export default function ContactItem({ contact, onSuccess }: ContactItemProps) {
   const avatarColor = useMemo(() => randomColor(contact.id), [contact.nome]);
   return (
     <div
-      className="flex flex-row items-center w-full bg-white border-b-2 border-blue-700 last:rounded-b-3xl first:rounded-t-3xl shadow-sm px-2 py-2 transition hover:bg-blue-50"
+      className="flex flex-row items-center w-full bg-white border-b-2 border-secondary last:rounded-b-3xl first:rounded-t-3xl shadow-sm px-2 py-2 transition hover:bg-blue-50"
       aria-label={`Contato: ${contact.nome}`}
     >
-      <div className="flex items-center gap-3 min-w-[160px] max-w-[160px] border-r-2 border-blue-700 pr-3">
+      <div className="flex items-center gap-3 min-w-[160px] max-w-[160px] border-r-2 border-secondary pr-3">
         <span
           className={`rounded-full flex-shrink-0 w-10 h-10 flex items-center justify-center text-white font-bold text-lg ${avatarColor}`}
           aria-label={`Inicial do nome: ${contact.nome.charAt(0)}`}

@@ -39,7 +39,7 @@ export const ContactAddItem = ({ onSuccess,agendaId }: { onSuccess?: () => void,
     const { show, message, type, showAlert, hideAlert } = useAlert();
     const [error,setError] = useState("");
     
-    const { trigger, isMutating } = useSWRMutation("http://localhost:8080/contatos", sendContact);
+    const { trigger, isMutating } = useSWRMutation("http://localhost:8080/agenda", sendContact);
     console.log("Render Add")
     const handleAdd = async () => {
       if(nome.trim().length < 2){
@@ -112,7 +112,7 @@ export const ContactAddItem = ({ onSuccess,agendaId }: { onSuccess?: () => void,
                       onClick={closeModal}>Cancelar</Button>
                 <Button
                     className="px-10 py-2"
-                    variant="secondary"
+                     variant="secondary"
                     onClick={handleAdd}
                     disabled={isMutating}
                 >
