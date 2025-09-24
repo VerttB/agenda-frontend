@@ -40,7 +40,7 @@ function App() {
   const [erro,setError ] = useState("");
   const [name,setName] = useState("") 
   const navigate = useNavigate({from: "/"})
-  const { trigger, isMutating : isCreating } = useSWRMutation(`http://localhost:8080/agenda/`, sendAgenda);
+  const { trigger, isMutating : isCreating } = useSWRMutation(`http://localhost:8080/agenda`, sendAgenda);
   const { trigger: triggerEnter, isMutating:isEntering } = useSWRMutation(`http://localhost:8080/agenda/entrar`, sendEnter);
   const { show, message, type, showAlert, hideAlert } = useAlert();
   const isValidName = (s: string) => s.trim().length >= 2 && /^\p{L}+(?:[ '\p{L}]+)*$/u.test(s.trim())

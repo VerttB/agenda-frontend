@@ -69,7 +69,8 @@ export const ContactRemoveItem = ({contact,onSuccess}: ContactRemoveItemProps) =
             <Modal.Actions className="text-white w-full flex justify-around p-4 mb-6">
                 <Button className="px-12 py-2.5" variant="danger">Não</Button>
                 <Button
-                    className="px-10 py-2 bg-red-600 hover:bg-red-700"
+                    className="px-12 py-2.5"
+                    variant="disabled"
                     onClick={handleDelete}
                     disabled={isMutating}>
                         {isMutating ? "Excluindo..." : "Confirmar"}
