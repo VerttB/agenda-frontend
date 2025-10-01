@@ -81,6 +81,7 @@ function RouteComponent() {
     try{
       console.log("deletando muitos")
       await trigger({idAgenda: username, nome: search });
+      setSearch("");
       mutate(endpoint);
   }catch (error) {
       console.error("Erro ao deletar contatos:", error);
